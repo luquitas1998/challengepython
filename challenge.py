@@ -15,9 +15,6 @@ input_data = json_input[0]
 input_capital = input_data['capital'][0]
 input_population = input_data['population']
 
-print(f"Capital: {input_capital}")
-print(f"Porcentaje mundial: {(input_population / world_population) * 100:.4f}%")
-
 population_api = "https://restcountries.com/v3.1/all?fields=name,population"
 
 response_population = requests.get(population_api)
@@ -37,4 +34,4 @@ for each_country in population_data:
 
 country_list_sorted = sorted(country_list_sorted, key=lambda e: e[1])
 
-print(country_list_sorted[0][0])
+print(f"Capital: {input_capital}  Porcentaje mundial: {(input_population / world_population) * 100:.4f}%  Próximo país: {country_list_sorted[0][0]}")
