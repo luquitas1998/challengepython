@@ -1,19 +1,40 @@
 import requests
 
-world_pop = 8045311447
+world_population = 8045311447
 
 country = input("Por favor elige un país: ")
 
-url = f'https://restcountries.com/v3.1/name/{country}?fields=capital,population'
+input_api = f'https://restcountries.com/v3.1/name/{country}?fields=capital,population'
 
-response = requests.get(url)
+response_input = requests.get(input_api)
 
-json_data = response.json()
+json_input = response_input.json()
 
-requested_info = json_data[0]
+input_data = json_input[0]
 
-capital = requested_info['capital'][0]
-population = requested_info['population']
+input_capital = input_data['capital'][0]
+input_population = input_data['population']
 
-print(f"Capital: {capital}")
-print(f"Población: {(population / world_pop) * 100:.4f}")
+print(f"Capital: {input_capital}")
+print(f"Porcentaje mundial: {(input_population / world_population) * 100:.4f}%")
+
+population_api = "https://restcountries.com/v3.1/all?fields=name,population"
+
+response_population = requests.get(population_api)
+
+json_population = response_population.json()
+
+population_data = json_population
+
+country_list_sorted = []
+
+for each_country in population_data:
+    other_name = each_country['name']['common']
+    other_population = each_country['population']
+
+    if other_population > input_population:
+        country_list_sorted = country_list_sorted + [[other_name, other_population]]
+
+country_list_sorted = sorted(country_list_sorted, key=lambda e: e[1])
+
+print(country_list_sorted[0][0])
